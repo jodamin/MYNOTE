@@ -1,0 +1,176 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Note App</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            align-self: flex-end;
+            padding: 10px 25px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+
+        .button-change {
+            background-color: #007bff;
+            color: white !important;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .button-change:hover {
+            background-color: #0056b3;
+        }
+
+        .button-delete {
+            background-color: #dc3545;
+            color: white !important;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .button-delete:hover {
+            background-color: #c82333;
+        }
+
+        .note-actions a {
+            margin-left: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            word-wrap: break-word;
+            white-space: pre-wrap;
+
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+        }
+
+        .note-content {
+            flex-grow: 1;
+            padding-right: 15px;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        textarea {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: inherit;
+            min-height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1> Notebook for {{ name }}!</h1>
+    <p>This is my first personal project :D</p>
+
+    <!-- Add input for text-->
+    <form action="/add" method="POST">
+        <textarea name="content" placeholder="Feel free to write your story..." required></textarea>
+        <button type="submit">Save</button>
+    </form>
+    <!-- Add a script to modify the textarea to auto-resize based on its content -->
+    <script>
+        const tx = document.getElementsByTagName("textarea");
+        for (let i = 0; i < tx.length; i++) {
+            // 1. function auto-resize the textarea based on its content
+            function OnInput() {
+                this.style.height = "auto"; // Reset chiều cao về auto để tính toán lại
+                this.style.height = (this.scrollHeight) + "px"; // Sét chiều cao bằng đúng nội dung bên trong
+            }
+
+            // 2. call the function when the user types in the textarea
+            tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+            tx[i].addEventListener("input", OnInput, false);
+
+            // 3. keep the textarea auto-resize when the user presses enter, and shift + enter to drop a new line
+            tx[i].addEventListener("keydown", function (e) {
+                if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    this.form.submit();
+                }
+            });
+        }
+    </script>
+
+    <!-- Display the notes -->
+    <h3>My Notes:</h3>
+    <ul>
+        {% for note in notes %}
+        <li>
+            <div class="note-content">{{ note.content }}</div>
+
+            <div class="note-actions">
+                <a href="/update/{{ note.id }}" class="button-change">Change</a>
+                <a href="/delete/{{ note.id }}" class="button-delete">Delete</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>

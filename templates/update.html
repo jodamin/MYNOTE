@@ -1,0 +1,111 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Your Note
+    </title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: inherit;
+            min-height: 100px;
+            box-sizing: border-box;
+            overflow-y: hidden;
+        }
+
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .button-update {
+            padding: 10px 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .button-update:hover {
+            background-color: #0056b3;
+        }
+
+        .button-cancel {
+            padding: 10px 25px;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .button-cancel:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Update Your Note</h1>
+    <form action="/update/{{ note.id }}" method="POST">
+        <textarea name="content" placeholder="Update your note here..." required>{{ note.content }}</textarea>
+
+        <div class="button-group">
+            <button type="submit" class="button-update">Update</button>
+            <a href="/" class="button-cancel">Cancel</a>
+        </div>
+    </form>
+
+    <script>
+        const tx = document.getElementsByTagName("textarea");
+        for (let i = 0; i < tx.length; i++) {
+            function OnInput() {
+                this.style.height = "auto";
+                this.style.height = (this.scrollHeight) + "px";
+            }
+
+            tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+            tx[i].addEventListener("input", OnInput, false);
+
+            tx[i].addEventListener("keydown", function (e) {
+                if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    this.form.submit();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
