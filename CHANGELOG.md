@@ -3,6 +3,7 @@ Changelog
 All notable changes to the Notebook App project will be documented in this file.
 
 [1.0.1] - 2026-02-20
+
 🟢 Added
 
     Dependency Management: Added requirements.txt file to keep track of project libraries.
@@ -16,6 +17,7 @@ All notable changes to the Notebook App project will be documented in this file.
     Terminal Environment: Resolved PowerShell execution policy issues to allow smooth venv activation in VS Code.
 
 [1.0.0] - 2026-02-19
+
 🟢 Added
 
     Backend Core: Implemented the Flask Framework to manage the application logic.
