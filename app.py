@@ -27,7 +27,7 @@ with app.app_context():
 @app.route("/")
 def index():
     all_notes = Note.query.order_by(Note.id.desc()).all()
-    return render_template("index.html", name="Thien", notes=all_notes)
+    return render_template("index.html", name="", notes=all_notes)
 
 
 # --------FOR ADDING NOTE--------
