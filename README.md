@@ -5,6 +5,9 @@ A lightweight Full-stack Web Application built with Flask and SQLite to manage p
 🚀 Overview
 This project allows users to create, view, update, and delete notes (CRUD operations) through a clean, responsive web interface. It is designed to be a "lab" where I apply my knowledge of Python, Databases, and Frontend design.
 
+## 📜 Project Updates
+See the full history of changes in our [CHANGELOG.md](./CHANGELOG.md).
+
 🛠️ Tech Stack
 
     Backend: Python (Flask Framework)
