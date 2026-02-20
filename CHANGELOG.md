@@ -22,6 +22,7 @@ All notable changes to the Notebook App project will be documented in this file.
 
     Routing Logic: Resolved a Python IndentationError in the welcome function that was preventing the page from rendering correctly.
 
+    Template Logic: Fixed a hardcoded name bug in update_note route where it always displayed "Thien" instead of the active user's name from session["name"].
 
 [1.0.1] - 2026-02-20
 
