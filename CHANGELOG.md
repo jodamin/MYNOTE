@@ -2,6 +2,30 @@ Changelog
 
 All notable changes to the Notebook App project will be documented in this file.
 
+[1.2.0] - 2026-02-21
+
+🚀 Added
+
+    Dark Mode Support: Implemented a global dark theme using CSS Variables. 
+
+    Persistent Theme: Added JavaScript logic using localStorage to save user preferences. 
+
+    Theme Toggle Button: Added a manual switch in index.html.
+
+🔄 Changed
+
+    CSS Architecture: Migrated from Internal CSS (styles inside HTML) to External CSS (static/style.css) for better project organization. 
+
+    Style Application: Updated all HTML elements to use CSS Variables instead of hardcoded hex colors. 
+
+🛠️ Fixed
+
+    Flash of Unstyled Content (FOUC): Prevented the white light flicker on page load. 
+
+    Textarea Auto-Resize: Corrected the height calculation logic for better responsiveness.
+
+    Preserve Formatting: Fixed the issue where line breaks were ignored in the notes list. 
+
 [1.0.2] - 2026-02-20
 
 🚀 Added

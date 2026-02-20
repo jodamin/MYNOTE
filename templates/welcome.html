@@ -4,64 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .welcome-container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #666;
-            margin-bottom: 25px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            /* Giúp padding không làm tăng chiều rộng input */
-            font-size: 16px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #5cb85c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background-color 0.2s;
-        }
-
-        button:hover {
-            background-color: #4cae4c;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Check theme preference immediately to prevent white flash -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 
 <body>
@@ -73,6 +25,36 @@
             <button type="submit">Start</button>
         </form>
     </div>
+
+    <!-- Scripts Js for switch theme -->
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // 1. Check for saved theme preference in localStorage on page load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark'); // Apply the dark theme attribute
+            if (toggleBtn) toggleBtn.textContent = '☀️ Light Mode'; // Update button text
+        }
+
+        // 2. Add event listener to handle the theme toggle
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const currentTheme = html.getAttribute('data-theme');
+
+                if (currentTheme === 'dark') {
+                    html.removeAttribute('data-theme'); // Revert to light mode
+                    localStorage.setItem('theme', 'light'); // Save the preference
+                    toggleBtn.textContent = '🌙 Dark Mode';
+                } else {
+                    html.setAttribute('data-theme', 'dark'); // Switch to dark mode
+                    localStorage.setItem('theme', 'dark'); // Save the preference
+                    toggleBtn.textContent = '☀️ Light Mode';
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

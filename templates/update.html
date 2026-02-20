@@ -5,75 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Your Note
     </title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #f4f4f9;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            resize: vertical;
-            font-family: inherit;
-            min-height: 100px;
-            box-sizing: border-box;
-            overflow-y: hidden;
-        }
-
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .button-update {
-            padding: 10px 25px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            transition: background-color 0.2s;
-        }
-
-        .button-update:hover {
-            background-color: #0056b3;
-        }
-
-        .button-cancel {
-            padding: 10px 25px;
-            background-color: #6c757d;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background-color 0.2s;
-        }
-
-        .button-cancel:hover {
-            background-color: #5a6268;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Check theme preference immediately to prevent white flash -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 
 <body>
@@ -87,7 +28,7 @@
         </div>
     </form>
 
-    <script>
+    <!-- <script>
         const tx = document.getElementsByTagName("textarea");
         for (let i = 0; i < tx.length; i++) {
             function OnInput() {
@@ -102,6 +43,65 @@
                 if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     this.form.submit();
+                }
+            });
+        }
+    </script> -->
+
+    <!-- Add a script to modify the textarea to auto-resize based on its content -->
+    <script>
+        const textareas = document.getElementsByTagName("textarea");
+
+        for (let i = 0; i < textareas.length; i++) {
+            const tx = textareas[i];
+
+            // Function to dynamically adjust height based on content
+            function autoResize() {
+                tx.style.height = "auto"; // Reset height to recalculate accurately
+                tx.style.height = tx.scrollHeight + "px"; // Set height based on scrollHeight
+            }
+
+            // 1. Initial call to adjust height on page load (useful for existing notes)
+            autoResize();
+
+            // 2. Trigger auto-resize on every user input
+            tx.addEventListener("input", autoResize);
+
+            // 3. Submit form on 'Enter' key, but allow new lines with 'Shift + Enter'
+            tx.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault(); // Prevent the default new line behavior
+                    this.form.submit(); // Trigger form submission
+                }
+            });
+        }
+    </script>
+
+    <!-- Scripts Js for switch theme -->
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // 1. Check for saved theme preference in localStorage on page load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark'); // Apply the dark theme attribute
+            if (toggleBtn) toggleBtn.textContent = '☀️ Light Mode'; // Update button text
+        }
+
+        // 2. Add event listener to handle the theme toggle
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const currentTheme = html.getAttribute('data-theme');
+
+                if (currentTheme === 'dark') {
+                    html.removeAttribute('data-theme'); // Revert to light mode
+                    localStorage.setItem('theme', 'light'); // Save the preference
+                    toggleBtn.textContent = '🌙 Dark Mode';
+                } else {
+                    html.setAttribute('data-theme', 'dark'); // Switch to dark mode
+                    localStorage.setItem('theme', 'dark'); // Save the preference
+                    toggleBtn.textContent = '☀️ Light Mode';
                 }
             });
         }

@@ -1,0 +1,154 @@
+/* 1. Defind color object */
+:root {
+    --bg-color: #f4f4f9;
+    --container-bg: #ffffff;
+    --text-color: #333333;
+    --secondary-text: #666666;
+    --border-color: #dddddd;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #f4f4f9;
+    --secondary-text: #bbbbbb;
+    --border-color: #444444;
+}
+
+/* 2. For global */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+h1,
+h3 {
+    color: var(--text-color);
+}
+
+p {
+    color: var(--secondary-text);
+}
+
+/* For text places */
+
+textarea,
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    box-sizing: border-box;
+    min-height: 60px;
+}
+
+textarea {
+    /*specific for textarea to not conflict with script in index.html*/
+    resize: none;
+    overflow-y: hidden;
+    min-height: 60px;
+}
+
+/* 3. For specifics */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li,
+.welcome-container {
+    background: var(--container-bg);
+    color: var(--text-color);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.note-content {
+    flex-grow: 1;
+    padding-right: 15px;
+    white-space: pre-wrap;
+}
+
+.note-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* 4. Button and link */
+button,
+.button-change,
+.button-delete,
+.button-update,
+.button-cancel,
+.change-name {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+    color: white !important;
+    display: inline-block;
+}
+
+button:hover,
+a:hover {
+    opacity: 0.8;
+}
+
+.change-name {
+    background-color: blueviolet;
+    margin-bottom: 20px;
+}
+
+button[type="submit"],
+.button-update {
+    background-color: #5cb85c;
+    align-self: flex-end;
+}
+
+.button-change {
+    background-color: #007bff;
+}
+
+.button-delete {
+    background-color: #dc3545;
+}
+
+.button-cancel {
+    background-color: #6c757d;
+}
+
+/* Switch mode button */
+#theme-toggle {
+    background-color: var(--container-bg);
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
