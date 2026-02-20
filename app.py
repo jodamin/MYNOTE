@@ -105,7 +105,7 @@ def update_note(id):
         except:
             return "Cannot update the note. Please try again!"
     else:
-        return render_template("update.html", name="Thien", note=note)
+        return render_template("update.html", name=session["name"], note=note)
 
 
 if __name__ == "__main__":
