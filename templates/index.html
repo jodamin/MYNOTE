@@ -41,13 +41,18 @@
             background-color: #4cae4c;
         }
 
-        input[type="text"] {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .change-name {
+            background-color: blueviolet;
+            color: whitesmoke !important;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
         }
 
+        .change-name:hover {
+            background-color: blueviolet;
+        }
 
         .button-change {
             background-color: #007bff;
@@ -125,12 +130,14 @@
 </head>
 
 <body>
-    <h1>Notebook is here!</h1>
-    <!-- <h1> Notebook for {{ name }}!</h1> -->
-    <p>This is my first personal project :D</p>
+    <h1>Your Notebook here, {{ name }}</h1>
+    <a href="/welcome" class="change-name">Change Your Name</a>
+    <!-- <p>This is my first personal project :D</p> -->
+
 
     <!-- Add input for text-->
     <form action="/add" method="POST">
+        <h3>Writing here</h3>
         <textarea name="content" placeholder="Feel free to write your story..." required></textarea>
         <button type="submit">Save</button>
     </form>
@@ -159,7 +166,7 @@
     </script>
 
     <!-- Display the notes -->
-    <h3>My Notes:</h3>
+    <h3>My Notes</h3>
     <ul>
         {% for note in notes %}
         <li>
