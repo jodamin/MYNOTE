@@ -1,51 +1,34 @@
-📝 Notebook App - Personal Data Management Project
+# 📝 MYNOTE - Personal Data Management Project
 
-A lightweight Full-stack Web Application built with Flask and SQLite to manage personal notes and more. This is my very first personal project as an Information Technology student specializing in Data Technology.
-
-🚀 Overview
-This project allows users to create, view, update, and delete notes (CRUD operations) through a clean, responsive web interface. It is designed to be a "lab" where I apply my knowledge of Python, Databases, and Frontend design.
+A lightweight Full-stack Web Application built with **Flask** and **SQLite**. This is my first personal project as an Information Technology student specializing in **Data Technology** at Van Lang University.
 
 ## 📜 Project Updates
 See the full history of changes in our [CHANGELOG.md](./CHANGELOG.md).
 
-🛠️ Tech Stack
+## 🚀 Overview
+This project serves as a "coding lab" where I apply my knowledge of Python, Databases, and Frontend design. It allows users to manage notes through a clean, highly personalized interface.
 
-    Backend: Python (Flask Framework)
+## 🛠️ Tech Stack
+- **Backend**: Python (Flask Framework)
+- **Database**: SQLite with SQLAlchemy (ORM)
+- **Frontend**: HTML5, CSS3 (Glassmorphism), and Vanilla JavaScript
+- **Environment**: Windows 11 IoT Enterprise LTSC
 
-    Database: SQLite with SQLAlchemy (ORMs)
+## ✨ Key Features
+- **Full CRUD**: Seamlessly add, read, edit, and remove notes.
+- **Customization**: Change backgrounds and toggle between Dark/Light modes.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Persistent Storage**: Data and preferences are stored locally and securely.
 
-    Frontend: HTML5, CSS3 (Flexbox), and Vanilla JavaScript
+## 📈 Future Roadmaps (Phase 2)
+As a **Data Technology** major, I plan to integrate:
+1. **Data Analytics**: Use **Pandas** to analyze note-taking frequency and productivity.
+2. **Visualization**: Implement charts to compare monthly activity.
+3. **Smart Features**: Task checklists and automated reminders.
 
-    Environment: Windows
-
-✨ Key Features
-
-    Full CRUD Functionality: Seamlessly add, read, edit, and remove notes.
-
-    Smart Interface: Auto-resizing textareas and keyboard shortcuts (Enter to save, Shift+Enter for new lines).
-
-    Responsive Layout: Optimized with Flexbox for a consistent experience.
-
-    Persistent Storage: Data is stored locally in an SQLite database file.
-
-📈 Future Roadmaps (Phase 2)
-
-As a Data Technology major, I plan to integrate the following:
-
-    Data Analytics: Using Pandas to analyze note-taking frequency and productivity trends.
-
-    Visualization: Implementing charts to compare monthly activity.
-
-    Features: Dark/Light mode, Task checklists, and Reminders.
-
-    And more in the future...
-
-⚙️ Installation
-
-    Clone the repository.
-
-    Create a virtual environment: python -m venv venv.
-
-    Activate the environment: venv\Scripts\activate.
-
-    Install dependencies and run: python app.py.
+## ⚙️ Installation
+1. Clone the repository.
+2. Create a virtual environment: `python -m venv venv`.
+3. Activate the environment: `venv\Scripts\activate`.
+4. Install dependencies: `pip install -r requirements.txt`
+5. Run the file: `python app.py`.
