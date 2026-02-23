@@ -1,5 +1,23 @@
+# Virtual Environment
 venv/
+
+# Python artifacts
 *.pyc
 __pycache__/
+
+# Flask/SQLAlchemy instance folder
 instance/
+
+# Environment variables
 .env
+
+# Database (Quan trọng cho SQLite)
+*.db
+
+# IDE settings (Cho máy Lenovo của bạn)
+.vscode/
+.idea/
+
+# OS generated files
+Thumbs.db
+desktop.ini
