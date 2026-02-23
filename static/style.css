@@ -1,29 +1,46 @@
 /* 1. Defind color object */
 :root {
-    --bg-color: #f4f4f9;
-    --container-bg: #ffffff;
-    --text-color: #333333;
-    --secondary-text: #666666;
-    --border-color: #dddddd;
+    /* Light Mode */
+    --bg-color: #e0e0d6;
+    --sidebar-bg: #d4d4c7;
+    --card-bg: #f0f0e8;
+    --text-color: #211b34;
+    --accent-color: #211b34;
+    --accent-hover: #2b221c;
+    --accent-text: #ffffff;
+    --border-color: #1a1a1a;
+    --glass-bg: rgba(212, 212, 199, 0.7);
 }
 
 [data-theme="dark"] {
-    --bg-color: #1a1a1a;
-    --container-bg: #2d2d2d;
-    --text-color: #f4f4f9;
-    --secondary-text: #bbbbbb;
-    --border-color: #444444;
+    /* Dark Mode */
+    --bg-color: #0f1427;
+    --sidebar-bg: #18203e;
+    --card-bg: #18203e;
+    --text-color: #e0e0d6;
+    --accent-color: #e0e0d6;
+    --accent-hover: #ffffff;
+    --accent-text: #1a1a1a;
+    --border-color: #040710;
+    --glass-bg: rgba(14, 22, 45, 0.8);
 }
 
 /* 2. For global */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.4s ease, color 0.4s ease;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-color);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 h1,
@@ -58,97 +75,468 @@ textarea {
 }
 
 /* 3. For specifics */
-form {
+
+/* main layout */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: transparent !important;
+}
+
+/* Sidebar left */
+.sidebar {
+    flex: 1;
+    background-color: var(--glass-bg) !important;
+    padding: 40px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li,
-.welcome-container {
-    background: var(--container-bg);
-    color: var(--text-color);
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-li {
-    display: flex;
+    gap: 30px;
+    border-right: 3px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     justify-content: space-between;
-    align-items: center;
 }
 
-.note-content {
-    flex-grow: 1;
-    padding-right: 15px;
-    white-space: pre-wrap;
-}
-
-.note-actions {
+.sidebar-top-group {
     display: flex;
-    gap: 10px;
-    flex-shrink: 0;
+    flex-direction: column;
+    gap: 30px;
+    /* Khoảng cách giữa dòng chào và các nút */
 }
 
-/* 4. Button and link */
-button,
-.button-change,
-.button-delete,
-.button-update,
-.button-cancel,
-.change-name {
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* right side */
+.main-content {
+    flex: 3;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+/* 2. Grid each note */
+.note-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.note-card {
+    background-color: var(--card-bg);
+    border: 3px solid var(--border-color);
+    padding: 20px;
+    min-height: 130px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     cursor: pointer;
-    border: none;
-    transition: opacity 0.2s;
-    color: white !important;
-    display: inline-block;
+    transition: all 0.2s ease;
+    box-shadow: 5px 5px 0px var(--border-color);
 }
 
-button:hover,
-a:hover {
-    opacity: 0.8;
+.note-preview {
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.change-name {
-    background-color: blueviolet;
-    margin-bottom: 20px;
+.note-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 0px var(--border-color);
 }
 
-button[type="submit"],
-.button-update {
-    background-color: #5cb85c;
+.note-date {
+    font-size: 12px;
     align-self: flex-end;
+    font-weight: bold;
 }
 
-.button-change {
-    background-color: #007bff;
+/* 3. CSS Modal Popup */
+.modal {
+    display: none;
+
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    backdrop-filter: blur(5px);
 }
 
-.button-delete {
-    background-color: #dc3545;
+.modal-content {
+    background-color: var(--bg-color);
+    margin: 5% auto;
+    padding: 40px;
+    border: 4px solid var(--border-color);
+    width: 60%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 20px 20px 0px var(--border-color);
 }
 
-.button-cancel {
-    background-color: #6c757d;
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 40px;
+    cursor: pointer;
 }
 
-/* Switch mode button */
-#theme-toggle {
-    background-color: var(--container-bg);
+#modal-textarea {
+    white-space: pre-wrap;
+    width: 100%;
+    height: 300px;
+    background: transparent;
+    border: 2px solid var(--text-color);
+    padding: 15px;
+    font-family: inherit;
+    font-size: 18px;
+    resize: none;
+    margin: 20px 0;
+}
+
+/* ------------------New for welcome page-------------------- */
+.split-screen {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+.left-section {
+    flex: 1.5;
+    padding: 0 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.right-section {
+    flex: 1;
+    position: relative;
+}
+
+.right-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.brand-badge {
+    position: absolute;
+    top: 80px;
+    left: 85%;
+    background-color: var(--card-bg);
+    border: 3px solid var(--border-color);
+    padding: 15px 30px;
+    transform: rotate(-10deg);
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    z-index: 10;
+    box-shadow: 8px 8px 0px var(--border-color);
+    color: var(--text-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.brand-badge:hover {
+    transform: translateX(-40%) rotate(-3deg) scale(1.05);
+    box-shadow: 15px 15px 0px #e03070d1;
+    cursor: default;
+}
+
+.emoji {
+    font-size: 60px;
+}
+
+.brand-text {
+    font-size: 60px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.project-tag {
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+
+.welcome-main h2 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 28px;
+}
+
+.my-info h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 55px;
+    opacity: 0.8;
+    position: absolute;
+    bottom: 50px;
+    left: 14.7%;
+
+}
+
+.insta-link {
+    text-decoration: none;
+    /* Bỏ gạch chân mặc định */
+    color: inherit;
+}
+
+.insta-info {
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: var(--accent-color);
+    color: var(--accent-text) !important;
+    border: 2px solid var(--border-color);
+    transition: all 0.2s ease;
+    position: absolute;
+    bottom: 50px;
+    left: 14.7%;
+
+}
+
+.insta-info:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0px var(--border-color);
+    cursor: pointer;
+}
+
+/* INPUT & BUTTON */
+.name-input {
+    background: transparent !important;
+    border: 3px solid var(--text-color) !important;
+    border-radius: 0 !important;
+    font-size: clamp(24px, 5vw, 48px) !important;
+    padding: 25px !important;
+    font-family: 'Courier New', Courier, monospace;
+    width: 100% !important;
+    margin-top: 20px;
     color: var(--text-color) !important;
-    border: 1px solid var(--border-color);
+}
+
+.start-btn {
+    background-color: var(--accent-color) !important;
+    color: var(--accent-text) !important;
+    font-weight: bold;
+    padding: 15px 40px !important;
+    border-radius: 0px !important;
+    border: 3px solid var(--border-color) !important;
+    font-size: 24px !important;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 8px 8px 0px var(--border-color);
+}
+
+.start-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0px var(--border-color);
+    background-color: var(--accent-hover) !important;
+}
+
+.start-btn:active {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+}
+
+.sidebar-nav .start-btn {
+    display: block !important;
+    width: 100% !important;
+    text-align: left;
     margin-bottom: 20px;
+    box-sizing: border-box;
+
+    background-color: var(--sidebar-bg) !important;
+    color: var(--text-color) !important;
+    border: 3px solid var(--border-color) !important;
+    box-shadow: 6px 6px 0px var(--border-color);
+    border-radius: 0px !important;
+
+    padding: 15px 15px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.2rem !important;
+}
+
+.sidebar-nav .start-btn:hover {
+    background-color: var(--card-bg) !important;
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px var(--border-color);
+}
+
+.sidebar-nav .start-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+/* Button in modal action */
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.modal-actions .start-btn {
+    padding: 8px 20px !important;
+    font-size: 16px !important;
+    width: auto !important;
+    box-shadow: 4px 4px 0px var(--border-color);
+}
+
+
+.modal-actions .delete-btn {
+    background-color: #ff4d4d !important;
+    color: white !important;
+}
+
+.modal-actions .delete-btn:hover {
+    background-color: #ff0000 !important;
+}
+
+/* 📱 Responsive for Phone and Tablet */
+@media (max-width: 768px) {
+
+    /* modify for welcome page */
+    .split-screen {
+        flex-direction: column;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .left-section {
+        padding: 60px 20px !important;
+        justify-content: flex-start;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 100vh;
+    }
+
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .brand-badge {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        margin: 20px auto 40px !important;
+        width: fit-content;
+        box-shadow: 6px 6px 0px var(--border-color) !important;
+    }
+
+    .brand-text,
+    .emoji {
+        font-size: 30px !important;
+    }
+
+    .my-info {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        margin-top: 60px !important;
+        text-align: center;
+        width: 100% !important;
+        border-top: 2px dashed var(--border-color);
+        padding-top: 20px;
+    }
+
+    .my-info h3,
+    .insta-info {
+        position: static !important;
+        display: block;
+        margin: 10px auto !important;
+        width: fit-content;
+    }
+
+    /* rolate main layout */
+    .app-container,
+    .split-screen {
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* Sidebar to top */
+    .sidebar {
+        padding: 20px;
+        border-right: none;
+        border-bottom: 3px solid var(--border-color);
+        height: auto;
+    }
+
+    /* modify Grid note */
+    .note-grid {
+        grid-template-columns: 1fr;
+        /* just 1 column for phone */
+        gap: 15px;
+    }
+
+    /* modify welcome page */
+    .right-section {
+        display: none;
+    }
+
+    .left-section {
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    /* modify photo and brand-badge */
+    .brand-badge {
+        position: static;
+        transform: none;
+        margin: 0 auto 30px;
+        justify-content: center;
+    }
+
+    .brand-text,
+    .emoji {
+        font-size: 30px;
+    }
+
+    .name-input {
+        font-size: 1.5rem !important;
+        width: 80% !important;
+        margin-bottom: 30px !important;
+        text-align: center;
+    }
+
+    .start-btn {
+        margin: 0 auto !important;
+        width: fit-content !important;
+        padding: 15px 40px !important;
+    }
 }

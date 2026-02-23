@@ -17,13 +17,47 @@
 </head>
 
 <body>
-    <div class="welcome-container">
+    <!-- old design -->
+    <!-- <div class="welcome-container">
         <h1>Welcome to Notebook!</h1>
         <p>What is your name?</p>
         <form action="/welcome" method="POST">
             <input type="text" name="user_name" placeholder="Enter your name..." required>
             <button type="submit">Start</button>
         </form>
+    </div> -->
+
+    <!-- New design -->
+    <div class="split-screen">
+        <div class="left-section">
+            <header>
+                <p class="project-tag">A PROJECT FROM <strong>JOSDANG</strong></p>
+                <div class="brand-badge">
+                    <span class="emoji">:D</span>
+                    <span class="brand-text">MYNOTE</span>
+                </div>
+            </header>
+
+            <main class="welcome-main">
+                <h2>ENTER YOUR NAME:</h2>
+                <form action="/welcome" method="POST">
+                    <input type="text" name="user_name" class="name-input" placeholder="YOUR NAME..." required>
+                    <div style="text-align: left; margin-top: 20px"> <button type="submit" class="start-btn">START
+                            !!!</button>
+                    </div>
+                </form>
+                <div class="my-info">
+                    <h3>Follow me at:</h3>
+                    <a href="https://www.instagram.com/gonnasleep4sure" target="_blank" class="insta-link">
+                        <p class="insta-info">@gonnasleep4sure</p>
+                    </a>
+                </div>
+            </main>
+        </div>
+
+        <div class="right-section">
+            <img src="{{ url_for('static', filename='images/welcome-bg.png') }}" alt="Notebook illustration">
+        </div>
     </div>
 
     <!-- Scripts Js for switch theme -->

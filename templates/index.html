@@ -17,62 +17,165 @@
 </head>
 
 <body>
-    <h1>Your Notebook here, {{ name }}</h1>
-    <button id="theme-toggle">🌙 Dark Mode</button>
-    <a href="/welcome" class="change-name">Change Your Name</a>
-    <!-- <p>This is my first personal project :D</p> -->
+    <div class="app-container">
 
+        <aside class="sidebar">
+            <div class="sidebar-top-group">
+                <div class="user-info">
+                    <h2>Hi {{ name }},</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <button class="start-btn" id="add-note-btn" onclick="openModalForAdd()">Add New Note...</button>
+                    <button class="start-btn" id="theme-toggle">Change Theme</button>
+                    <button class="start-btn" id="bg-toggle">Change Background</button>
+                    <button class="start-btn" id="bg-reset">Reset Background</button>
+                    <input type="file" id="bg-input" accept="image/*" style="display: none;">
+                    <a href="/welcome" class="start-btn change-name-btn"
+                        style="text-decoration: none; text-align: left;">Change Name</a>
+                </nav>
+            </div>
+        </aside>
 
-    <!-- Add input for text-->
-    <form action="/add" method="POST">
-        <h3>Writing here</h3>
-        <textarea name="content" placeholder="Feel free to write your story..." required></textarea>
-        <button type="submit">Save</button>
-    </form>
+        <main class="main-content">
+            <div class="note-grid">
+                {% for note in notes %}
+                <div class="note-card" onclick="openNote('{{ note.id }}')">
+                    <div class="note-preview">{{ note.content }}</div>
+                    <div class="note-footer">
+                        <span class="note-date">{{ note.date }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
 
-    <!-- Add a script to modify the textarea to auto-resize based on its content -->
+        </main>
+
+    </div>
+
+    <div id="note-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">ADD NEW NOTE</h2>
+
+            <form id="note-form" action="/add" method="POST">
+                <input type="hidden" name="note_id" id="modal-note-id">
+
+                <textarea name="content" id="modal-textarea" placeholder="Feel free to write your story..."
+                    required></textarea>
+
+                <div class="modal-actions">
+                    <button type="submit" class="start-btn" id="modal-save-btn">SAVE</button>
+                    <button type="button" class="start-btn delete-btn" id="modal-delete-btn"
+                        style="display: none;">DELETE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts change background and reset background-->
     <script>
-        const textareas = document.getElementsByTagName("textarea");
+        const bgToggleBtn = document.getElementById('bg-toggle');
+        const bgInput = document.getElementById('bg-input');
 
-        for (let i = 0; i < textareas.length; i++) {
-            const tx = textareas[i];
+        bgToggleBtn.addEventListener('click', () => {
+            bgInput.click();
+        });
 
-            // Function to dynamically adjust height based on content
-            function autoResize() {
-                tx.style.height = "auto"; // Reset height to recalculate accurately
-                tx.style.height = tx.scrollHeight + "px"; // Set height based on scrollHeight
-            }
+        bgInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imageUrl = e.target.result;
 
-            // 1. Initial call to adjust height on page load (useful for existing notes)
-            autoResize();
+                    document.body.style.backgroundImage = `url(${imageUrl})`;
+                    document.body.style.backgroundSize = "cover";
+                    document.body.style.backgroundPosition = "center";
+                    document.body.style.backgroundAttachment = "fixed";
 
-            // 2. Trigger auto-resize on every user input
-            tx.addEventListener("input", autoResize);
 
-            // 3. Submit form on 'Enter' key, but allow new lines with 'Shift + Enter'
-            tx.addEventListener("keydown", function (e) {
-                if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault(); // Prevent the default new line behavior
-                    this.form.submit(); // Trigger form submission
+                    localStorage.setItem('custom-bg', imageUrl);
                 }
-            });
-        }
+                reader.readAsDataURL(file);
+            }
+        });
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedBg = localStorage.getItem('custom-bg');
+            if (savedBg) {
+                document.body.style.backgroundImage = `url(${savedBg})`;
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center";
+                document.body.style.backgroundAttachment = "fixed";
+            }
+        });
+
+        const bgResetBtn = document.getElementById('bg-reset');
+
+        bgResetBtn.addEventListener('click', () => {
+            document.body.style.backgroundImage = 'none';
+            localStorage.removeItem('custom-bg');
+
+            // 3. reload page (optional)
+            // window.location.reload(); 
+
+            alert("Background has been reset to default!");
+        });
     </script>
 
-    <!-- Display the notes -->
-    <h3>My Notes</h3>
-    <ul>
-        {% for note in notes %}
-        <li>
-            <div class="note-content">{{ note.content }}</div>
+    <!-- Scripts popup -->
+    <script>
+        const modal = document.getElementById('note-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalForm = document.getElementById('note-form');
+        const modalTextarea = document.getElementById('modal-textarea');
+        const modalNoteId = document.getElementById('modal-note-id');
+        const deleteBtn = document.getElementById('modal-delete-btn');
 
-            <div class="note-actions">
-                <a href="/update/{{ note.id }}" class="button-change">Change</a>
-                <a href="/delete/{{ note.id }}" class="button-delete">Delete</a>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+
+        function openModalForAdd() {
+            modalTitle.innerText = "ADD NEW NOTE";
+            modalForm.action = "/add";
+            modalTextarea.value = "";
+            modalNoteId.value = "";
+            deleteBtn.style.display = "none";
+            modal.style.display = "block";
+        }
+
+
+        function openNote(id) {
+            const noteCard = event.currentTarget;
+            const content = noteCard.querySelector('.note-preview').innerText;
+
+            modalTitle.innerText = "EDIT NOTE";
+            modalForm.action = "/update/" + id;
+            modalTextarea.value = content;
+            modalNoteId.value = id;
+
+
+            deleteBtn.style.display = "block";
+            deleteBtn.onclick = function () {
+                if (confirm("Are you sure you want to delete this note?")) {
+                    window.location.href = "/delete/" + id;
+                }
+            };
+
+            modal.style.display = "block";
+        }
+
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 
     <!-- Scripts Js for switch theme -->
     <script>
@@ -83,7 +186,7 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             html.setAttribute('data-theme', 'dark'); // Apply the dark theme attribute
-            if (toggleBtn) toggleBtn.textContent = '☀️ Light Mode'; // Update button text
+            if (toggleBtn) toggleBtn.textContent = 'Light Mode'; // Update button text
         }
 
         // 2. Add event listener to handle the theme toggle
@@ -94,11 +197,11 @@
                 if (currentTheme === 'dark') {
                     html.removeAttribute('data-theme'); // Revert to light mode
                     localStorage.setItem('theme', 'light'); // Save the preference
-                    toggleBtn.textContent = '🌙 Dark Mode';
+                    toggleBtn.textContent = 'Dark Mode';
                 } else {
                     html.setAttribute('data-theme', 'dark'); // Switch to dark mode
                     localStorage.setItem('theme', 'dark'); // Save the preference
-                    toggleBtn.textContent = '☀️ Light Mode';
+                    toggleBtn.textContent = 'Light Mode';
                 }
             });
         }

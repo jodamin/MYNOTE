@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import timedelta
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "this_is_secret"
@@ -19,6 +20,9 @@ db = SQLAlchemy(app)
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(500), nullable=False)
+    date = db.Column(
+        db.String(50), default=lambda: datetime.now().strftime("%H:%M - %d/%m/%Y")
+    )
 
 
 # create the database file
@@ -99,6 +103,7 @@ def update_note(id):
     # if user change the note
     if request.method == "POST":
         note.content = request.form.get("content")
+        note.date = datetime.now().strftime("%H:%M - %d/%m/%Y")
         try:
             db.session.commit()  # save
             return redirect("/")
