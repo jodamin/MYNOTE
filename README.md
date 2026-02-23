@@ -1,6 +1,6 @@
 # 📝 MYNOTE - Personal Data Management Project
 
-A lightweight Full-stack Web Application built with **Flask** and **SQLite**. This is my first personal project as an Information Technology student specializing in **Data Technology** at Van Lang University.
+A lightweight Full-stack Web Application built with **Flask** and **SQLite**. This is my first personal project as an Information Technology student specializing in **Data Technology** at University.
 
 ## 📜 Project Updates
 See the full history of changes in our [CHANGELOG.md](./CHANGELOG.md).
