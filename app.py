@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import timedelta
@@ -35,7 +35,7 @@ with app.app_context():
 def index():
     # check if the name is already exist
     if "name" not in session:
-        return redirect("/welcome")
+        return redirect(url_for("welcome"))
 
     all_notes = Note.query.order_by(Note.id.desc()).all()
     return render_template("index.html", name=session["name"], notes=all_notes)
@@ -52,7 +52,7 @@ def welcome():
                 days=30
             )  # save the name for 30 days
             session["name"] = name  # save the name in the session
-            return redirect("/")
+            return redirect(url_for("index"))
     return render_template("welcome.html")
 
 
@@ -61,7 +61,7 @@ def welcome():
 def add_note():
     # check if user enter their name yet
     if "name" not in session:
-        return redirect("/welcome")
+        return redirect(url_for("welcome"))
 
     content = request.form.get("content")
     if content:
@@ -71,7 +71,7 @@ def add_note():
         )  # wrap the content into the Note class (database) oject
         db.session.add(new_note)
         db.session.commit()
-    return redirect("/")
+    return redirect(url_for("index"))
 
 
 # --------FOR DELETING NOTE--------
@@ -79,7 +79,7 @@ def add_note():
 def delete_note(id):
     # check if user enter their name yet
     if "name" not in session:
-        return redirect("/welcome")
+        return redirect(url_for("welcome"))
 
     note_to_delete = Note.query.get_or_404(
         id
@@ -87,7 +87,7 @@ def delete_note(id):
     try:
         db.session.delete(note_to_delete)
         db.session.commit()
-        return redirect("/")
+        return redirect(url_for("index"))
     except:
         return "Cannot delete the note. Please try again!"
 
@@ -97,7 +97,7 @@ def delete_note(id):
 def update_note(id):
     # check if user enter their name yet
     if "name" not in session:
-        return redirect("/welcome")
+        return redirect(url_for("welcome"))
 
     note = Note.query.get_or_404(id)
     # if user change the note
@@ -106,11 +106,11 @@ def update_note(id):
         note.date = datetime.now().strftime("%H:%M - %d/%m/%Y")
         try:
             db.session.commit()  # save
-            return redirect("/")
+            return redirect(url_for("index"))
         except:
             return "Cannot update the note. Please try again!"
     else:
-        return render_template("update.html", name=session["name"], note=note)
+        return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
