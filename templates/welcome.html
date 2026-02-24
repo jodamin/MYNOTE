@@ -17,16 +17,6 @@
 </head>
 
 <body>
-    <!-- old design -->
-    <!-- <div class="welcome-container">
-        <h1>Welcome to Notebook!</h1>
-        <p>What is your name?</p>
-        <form action="/welcome" method="POST">
-            <input type="text" name="user_name" placeholder="Enter your name..." required>
-            <button type="submit">Start</button>
-        </form>
-    </div> -->
-
     <!-- New design -->
     <div class="split-screen">
         <div class="left-section">
@@ -60,7 +50,7 @@
         </div>
     </div>
 
-    <!-- Scripts Js for switch theme -->
+    <!-- Scripts Js for switch theme
     <script>
         const toggleBtn = document.getElementById('theme-toggle');
         const html = document.documentElement;
@@ -88,7 +78,9 @@
                 }
             });
         }
-    </script>
+    </script> -->
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
