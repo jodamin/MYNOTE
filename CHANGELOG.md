@@ -1,6 +1,8 @@
 # 📔 MYNOTE Changelog
 All changes to the **MYNOTE** project are documented here.
 
+---
+
 ## [1.4.0] - 2026-02-26
 ### 🚀 Added
 - **PostgreSQL Integration**: Migrated the database from local SQLite to a professional PostgreSQL instance on Render for permanent data storage.
@@ -15,6 +17,8 @@ All changes to the **MYNOTE** project are documented here.
 ### 🛠️ Fixed
 - **NameError 'flash'**: Resolved the "flash not defined" bug by correctly importing the module in `app.py`.
 - **CSS Specificity**: Removed inline styles from the flash container to ensure custom CSS styles apply correctly.
+
+---
 
 ## [1.3.0] - 2026-02-23
 ### 🚀 Added
