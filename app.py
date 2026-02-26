@@ -36,11 +36,6 @@ class Note(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 
-# create the database file
-with app.app_context():
-    db.create_all()
-
-
 # --------FOR HOME PAGE--------
 @app.route("/")
 def index():
@@ -156,6 +151,10 @@ def change_name():
 
 
 if __name__ == "__main__":
+    # create the database file
+    with app.app_context():
+        db.create_all()
+
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
 
