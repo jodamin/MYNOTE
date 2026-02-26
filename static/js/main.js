@@ -121,3 +121,32 @@ window.onclick = function (event) {
         closeModal();
     }
 }
+
+// change name function
+function changeName() {
+    const newName = prompt("Enter your new name:");
+    // make sure user type letters
+    if (newName && newName.trim() !== "") {
+
+        const form = document.getElementById('change-name-form');
+        const input = document.getElementById('new-name-input');
+
+        if (form && input) {
+            input.value = newName.trim(); // assign new name to input
+            form.submit(); // send from by POST method
+        }
+    }
+}
+
+// auto hind notification after 3s
+window.addEventListener('DOMContentLoaded', () => {
+    const flashMessages = document.querySelectorAll('.flash-message');
+    flashMessages.forEach(msg => {
+        setTimeout(() => {
+            msg.style.opacity = '0';
+            msg.style.transform = 'translateX(100%)';
+            msg.style.transition = 'all 0.5s ease';
+            setTimeout(() => msg.remove(), 500);
+        }, 3000); // 3000ms
+    });
+});

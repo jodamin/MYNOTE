@@ -30,24 +30,38 @@
                     <button class="start-btn" id="bg-toggle">Change Background</button>
                     <button class="start-btn" id="bg-reset">Reset Background</button>
                     <input type="file" id="bg-input" accept="image/*" style="display: none;">
-                    <a href="/welcome" class="start-btn change-name-btn"
-                        style="text-decoration: none; text-align: left;">Change Name</a>
+
+                    <button class="start-btn" onclick="changeName()">Change Name</button>
+                    <form id="change-name-form" action="/change_name" method="POST" style="display: none;">
+                        <input type="hidden" name="new_name" id="new-name-input">
+                    </form>
                 </nav>
             </div>
         </aside>
 
         <main class="main-content">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="flash-container">
+                {% for message in messages %}
+                <div class="flash-message">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
             <div class="note-grid">
                 {% for note in notes %}
                 <div class="note-card" onclick="openNote('{{ note.id }}')">
-                    <div class="note-preview">{{ note.content }}</div>
+                    <div class="note-preview" style="white-space: pre-wrap;">{{ note.content }}</div>
                     <div class="note-footer">
                         <span class="note-date">{{ note.date }}</span>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-
         </main>
 
     </div>
@@ -211,3 +225,5 @@
 </body>
 
 </html>
+
+<!-- new update -->
