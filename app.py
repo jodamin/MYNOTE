@@ -26,7 +26,7 @@ db = SQLAlchemy(app)
 # create a table name User, this table will link with Note table
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(100), nullable=False)
     # a user can have many notes
     notes = db.relationship("Note", backref="owner", lazy=True)
 
@@ -63,23 +63,21 @@ def index():
 @app.route("/welcome", methods=["GET", "POST"])
 def welcome():
     if request.method == "POST":
-        name = request.form.get("user_name")
-        if name:
-            # check if user exist
-            user = User.query.filter_by(username=name).first()
-            if not user:
-                # if not will create a new one
-                user = User(username=name)
-                db.session.add(user)
-                db.session.commit()
 
-            session.permanent = True
-            app.permanent_session_lifetime = timedelta(
-                days=30
-            )  # save the name for 30 days
-            session["name"] = name  # save the name in the session
-            session["user_id"] = user.id
+        name = request.form.get("user_name")
+
+        if name:
+            new_user = User(username=name.strip())
+
+            db.session.add(new_user)
+            db.session.commit()
+
+            session["user_id"] = new_user.id
+            session["name"] = name
+
+            flash(f"Welcome to MYNOTE ^^ ☁️✨")
             return redirect(url_for("index"))
+
     return render_template("welcome.html")
 
 
@@ -146,14 +144,13 @@ def change_name():
     if "user_id" not in session:
         return redirect(url_for("welcome"))
 
-    new_name = request.form.get("new_name")
-
-    if new_name and new_name.strip():
+    new_name = request.form.get("new_name").strip()
+    if new_name:
         user = User.query.get(session["user_id"])
         if user:
-            user.username = new_name.strip()
+            user.username = new_name
+            session["name"] = new_name
             db.session.commit()
-            session["name"] = user.username
             flash("Name changed! ~.~ 💙")
 
     return redirect(url_for("index"))
