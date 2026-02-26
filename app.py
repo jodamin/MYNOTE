@@ -22,9 +22,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # create a database object
 db = SQLAlchemy(app)
 
-with app.app_context():
-    db.create_all()
-
 
 # create a table name User, this table will link with Note table
 class User(db.Model):
@@ -42,6 +39,10 @@ class Note(db.Model):
         db.String(50), default=lambda: datetime.now().strftime("%H:%M - %d/%m/%Y")
     )
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+
+with app.app_context():
+    db.create_all()
 
 
 # --------FOR HOME PAGE--------
@@ -158,8 +159,15 @@ def change_name():
     return redirect(url_for("index"))
 
 
+# --------run--------
 if __name__ == "__main__":
+    # if not using in Render, use local (5000)
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+
+    # For local: host is 127.0.0.1
+    # If Render: host is 0.0.0.0
+    host = "0.0.0.0" if os.environ.get("RENDER") else "127.0.0.1"
+
+    app.run(host=host, port=port, debug=True)
 
 # haizz~~
