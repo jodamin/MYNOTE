@@ -10,10 +10,6 @@ app.secret_key = "this_is_secret"
 # --------FOR DATABASE--------
 # create address to save database
 db_url = os.environ.get("DATABASE_URL", "sqlite:///database.db")
-if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
-
-db_url = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 if db_url and db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
 
@@ -28,6 +24,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # create a database object
 db = SQLAlchemy(app)
+
+with app.app_context():
+    db.create_all()
 
 
 # create a table name User, this table will link with Note table
