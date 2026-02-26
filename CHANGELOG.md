@@ -1,6 +1,21 @@
 # 📔 MYNOTE Changelog
 All changes to the **MYNOTE** project are documented here.
 
+## [1.4.0] - 2026-02-26
+### 🚀 Added
+- **PostgreSQL Integration**: Migrated the database from local SQLite to a professional PostgreSQL instance on Render for permanent data storage.
+- **Dynamic Environment Configuration**: Implemented `DATABASE_URL` environment variables to switch seamlessly between Local and Production environments.
+- **Cute Flash Notifications**: Added a candy-styled notification system with bouncy animations and pastel colors.
+- **Visual Feedback**: Integrated cloud `☁️` and heart `💙` emojis into system messages for a friendlier user experience.
+
+### 🔄 Changed
+- **Flash Message UI**: Redesigned notifications from a rigid box style to a "soft & cute" rounded pill design with `50px` border-radius.
+- **Code Refactoring**: Cleaned up Jinja2 templates in `index.html` to prevent HTML nesting errors and improve maintainability.
+
+### 🛠️ Fixed
+- **NameError 'flash'**: Resolved the "flash not defined" bug by correctly importing the module in `app.py`.
+- **CSS Specificity**: Removed inline styles from the flash container to ensure custom CSS styles apply correctly.
+
 ## [1.3.0] - 2026-02-23
 ### 🚀 Added
 - **Custom Background**: Users can now upload personal images to set as the app background.
