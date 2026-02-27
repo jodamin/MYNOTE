@@ -6,7 +6,7 @@ A lightweight Full-stack Web Application built with **Flask**. This is my first 
 🌐 [mynote-a6ef.onrender.com](https://mynote-a6ef.onrender.com/)
 
 ## 📜 Project Updates
-See the full history of changes in our [CHANGELOG.md](./CHANGELOG.md).
+See the full history of changes in [CHANGELOG.md](./CHANGELOG.md).
 
 ## 🚀 Overview
 This project serves as a "coding lab" where I apply my knowledge of Python, Databases, and Frontend design. It allows users to manage notes through a clean, highly personalized interface.
