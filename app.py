@@ -156,6 +156,11 @@ def change_name():
     return redirect(url_for("index"))
 
 
+@app.route("/healthcheck")
+def healthcheck():
+    return "OK", 200
+
+
 # --------run--------
 if __name__ == "__main__":
     # if not using in Render, use local (5000)
