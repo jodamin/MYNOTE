@@ -1,27 +1,31 @@
 # 📝 MYNOTE - Personal Data Management Project
 
-A lightweight Full-stack Web Application built with **Flask** and **PostgreSQL**. This is my first personal project as an Information Technology student specializing in **Data Technology** at University.
+A lightweight Full-stack Web Application built with **Flask**. This is my first personal project as an student at University.
 
 ## 🔗 Live Demo
 🌐 [mynote-a6ef.onrender.com](https://mynote-a6ef.onrender.com/)
 
-## 🛠️ Tech Stack & Environment
+## 📜 Project Updates
+See the full history of changes in our [CHANGELOG.md](./CHANGELOG.md).
+
+## 🚀 Overview
+This project serves as a "coding lab" where I apply my knowledge of Python, Databases, and Frontend design. It allows users to manage notes through a clean, highly personalized interface.
+
+## 🛠️ Tech Stack
 - **Backend**: Python (Flask Framework)
-- **Database**: PostgreSQL (Hosted on Render)
+- **Database**: PostgreSQL (Cloud hosted on Render) / SQLite (Local development)
 - **Frontend**: HTML5, CSS3 (Glassmorphism), and Vanilla JavaScript
-- **OS**: Windows 10/11 any version
+- **Environment**: Windows 10/ 11
 
 ## ✨ Key Features
 - **Full CRUD**: Seamlessly add, read, edit, and remove notes.
-- **Modern Connection**: Integrated with cloud PostgreSQL for persistent data.
-- **Customization**: Glassmorphism UI with Dark/Light mode toggle.
-- **Mobile Responsive**: Optimized for both Desktop and Mobile
+- **Customization**: Change backgrounds and toggle between Dark/Light modes.
+- **Responsive Design**: Optimized for both desktop and mobile
 
-## 📊 Data Insights (Future Roadmaps)
-I plan to integrate:
-1. **Productivity Analysis**: Using **Pandas** to analyze note-taking frequency.
-2. **Dashboard**: Interactive charts to visualize activity patterns.
-3. **Advanced SQL**: Optimizing complex queries and data normalization.
+## 📈 Future Roadmaps
+As a **Data Technology** major, I plan to integrate:
+1. **Data Analytics**: Use **Pandas** to analyze note-taking frequency and productivity.
+2. **Visualization**: Implement charts to compare monthly activity.
 
 ## ⚙️ Installation & Local Run
 1. Clone the repository.
