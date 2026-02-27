@@ -2,6 +2,9 @@
 
 A lightweight Full-stack Web Application built with **Flask** and **SQLite**. This is my first personal project as an Information Technology student specializing in **Data Technology** at University.
 
+## 📜 Live demo on website
+https://mynote-a6ef.onrender.com/
+
 ## 📜 Project Updates
 See the full history of changes in our [CHANGELOG.md](./CHANGELOG.md).
 
