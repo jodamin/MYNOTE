@@ -20,21 +20,25 @@ window.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const themeText = themeToggle.querySelector('.btn-text');
     const themeIcon = themeToggle.querySelector('i');
+    const sidebarElement = document.querySelector('.sidebar');
 
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.hasAttribute('data-theme');
-        sidebar.classList.remove('mobile-open')
+
+        if (sidebarElement) {
+            sidebarElement.classList.remove('mobile-open');
+        }
 
         if (isDark) {
             document.documentElement.removeAttribute('data-theme');
             localStorage.setItem('theme', 'light');
-            // Cập nhật giao diện
+            // Update interfacee
             themeText.textContent = 'Dark Mode';
             themeIcon.className = 'fas fa-moon';
         } else {
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
-            // Cập nhật giao diện
+            // Update interface
             themeText.textContent = 'Light Mode';
             themeIcon.className = 'fas fa-sun';
         }
