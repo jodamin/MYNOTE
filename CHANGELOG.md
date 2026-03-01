@@ -1,5 +1,5 @@
 # 📔 MYNOTE Changelog
-All changes to the **MYNOTE** project are documented here.
+All the changes to the **MYNOTE** project are documented here.
 
 ---
 
