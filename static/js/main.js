@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const isDark = document.documentElement.hasAttribute('data-theme');
 
         if (sidebarElement) {
-            sidebarElement.classList.remove('mobile-open');
+            // sidebarElement.classList.remove('mobile-open');
         }
 
         if (isDark) {

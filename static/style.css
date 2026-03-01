@@ -225,7 +225,7 @@ textarea {
     background-color: var(--card-bg);
     border: 3px solid var(--border-color);
     padding: 20px;
-    min-height: 130px;
+    min-height: 155px;
     height: auto;
 
     display: flex;
@@ -243,7 +243,7 @@ textarea {
     margin-bottom: 15px;
     white-space: pre-wrap;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -630,11 +630,11 @@ textarea {
 
         .modal-actions .start-btn {
             flex: 1;
-            /* Cho 2 nút dài bằng nhau và chiếm hết chiều ngang */
+
             font-size: 14px !important;
             padding: 12px 10px !important;
             white-space: nowrap;
-            /* Không cho chữ xuống dòng */
+
         }
 
 
@@ -672,12 +672,13 @@ textarea {
             background-color: var(--glass-bg) !important;
             backdrop-filter: blur(15px) saturate(180%);
             -webkit-backdrop-filter: blur(15px) saturate(180%);
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: max-height 0.3s ease-in-out, background-color 0.3s ease;
+            will-change: max-height;
         }
 
 
         .sidebar.mobile-open {
-            max-height: 100vh !important;
+            max-height: 564px !important;
             overflow-y: auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
@@ -748,17 +749,31 @@ textarea {
         }
 
 
-        .note-grid {
-            grid-template-columns: 1fr !important;
-            gap: 15px;
-        }
+
     }
 
-    /* modify Grid note */
+    /* modify note */
     .note-grid {
-        grid-template-columns: 1fr;
-        /* just 1 column for phone */
-        gap: 15px;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+        gap: 12px !important;
+        padding: 10px 0;
+    }
+
+    .note-card {
+        padding: 12px !important;
+        min-height: 120px !important;
+    }
+
+    .note-card h3 {
+        font-size: 1rem !important;
+    }
+
+    .note-card p {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     /* modify welcome page */
