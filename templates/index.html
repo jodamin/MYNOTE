@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Note App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Check theme preference immediately to prevent white flash -->
     <script>
         (function () {
@@ -21,21 +22,44 @@
 
         <aside class="sidebar">
             <div class="sidebar-top-group">
+
                 <div class="user-info">
                     <h2>Hi {{ name }},</h2>
                 </div>
+
                 <nav class="sidebar-nav">
-                    <button class="start-btn" id="add-note-btn" onclick="openModalForAdd()">Add New Note...</button>
-                    <button class="start-btn" id="theme-toggle">Change Theme</button>
-                    <button class="start-btn" id="bg-toggle">Change Background</button>
-                    <button class="start-btn" id="bg-reset">Reset Background</button>
+                    <button class="start-btn" id="add-note-btn" onclick="openModalForAdd()">
+                        <i class="fas fa-plus"></i>
+                        <span class="btn-text">Add New Note...</span>
+                    </button>
+                    <button class="start-btn" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                        <span class="btn-text">Change Theme</span>
+                    </button>
+                    <button class="start-btn" id="bg-toggle">
+                        <i class="fas fa-image"></i>
+                        <span class="btn-text">Change Background</span>
+                    </button>
+                    <button class="start-btn" id="bg-reset">
+                        <i class="fas fa-undo"></i>
+                        <span class="btn-text">Reset Background</span>
+                    </button>
                     <input type="file" id="bg-input" accept="image/*" style="display: none;">
 
-                    <button class="start-btn" onclick="changeName()">Change Name</button>
+                    <button class="start-btn" onclick="changeName()">
+                        <i class="fas fa-user-edit"></i>
+                        <span class="btn-text">Change Name</span>
+                    </button>
                     <form id="change-name-form" action="/change_name" method="POST" style="display: none;">
                         <input type="hidden" name="new_name" id="new-name-input">
                     </form>
                 </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="toggle-sidebar" class="toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </aside>
 

@@ -17,26 +17,28 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     /* 2. Toggle Light/Dark Mode */
-    const html = document.documentElement;
-    const toggleBtn = document.getElementById('theme-toggle');
-    if (toggleBtn) {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            toggleBtn.textContent = 'Light Mode';
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeText = themeToggle.querySelector('.btn-text');
+    const themeIcon = themeToggle.querySelector('i');
+
+    themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.hasAttribute('data-theme');
+        sidebar.classList.remove('mobile-open')
+
+        if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            // Cập nhật giao diện
+            themeText.textContent = 'Dark Mode';
+            themeIcon.className = 'fas fa-moon';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            // Cập nhật giao diện
+            themeText.textContent = 'Light Mode';
+            themeIcon.className = 'fas fa-sun';
         }
-        toggleBtn.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                html.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                toggleBtn.textContent = 'Dark Mode';
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                toggleBtn.textContent = 'Light Mode';
-            }
-        });
-    }
+    });
 
     /* 3. Handle Custom Background Upload */
     const bgToggleBtn = document.getElementById('bg-toggle');
@@ -83,6 +85,15 @@ const deleteBtn = document.getElementById('modal-delete-btn');
 
 /* Function to open modal for adding new note */
 function openModalForAdd() {
+    const sidebar = document.querySelector('.sidebar');
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove('mobile-open');
+    }
+
+    document.getElementById('note-modal').style.display = "block";
+    document.getElementById('modal-textarea').value = "";
+    document.getElementById('modal-textarea').focus();
+
     if (!modal) return;
     modalTitle.innerText = "ADD NEW NOTE";
     modalForm.action = "/add";
@@ -149,4 +160,57 @@ window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => msg.remove(), 500);
         }, 3000); // 3000ms
     });
+});
+
+// 3. To collapse sidebar
+// window.addEventListener('DOMContentLoaded', () => {
+//     const sidebar = document.querySelector('.sidebar');
+//     const toggleBtn = document.getElementById('toggle-sidebar');
+
+//     // Check and save to localstorage
+//     const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+//     if (isCollapsed) {
+//         sidebar.classList.add('collapsed');
+//     }
+
+//     if (toggleBtn) {
+//         toggleBtn.addEventListener('click', () => {
+//             // Toggle class collapsed
+//             sidebar.classList.toggle('collapsed');
+
+//             // Save to localStorage
+//             const nowCollapsed = sidebar.classList.contains('collapsed');
+//             localStorage.setItem('sidebar-collapsed', nowCollapsed);
+//         });
+//     }
+// });
+
+// 3. To collapse sidebar (Desktop) and Expand (Mobile)
+window.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.querySelector('.toggle-btn');
+
+    if (window.innerWidth > 768) {
+        const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+        if (isCollapsed) {
+            sidebar.classList.add('collapsed');
+        }
+    }
+
+    if (toggleBtn && sidebar) {
+        toggleBtn.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                // For mobile
+                sidebar.classList.toggle('mobile-open');
+                sidebar.classList.remove('collapsed');
+            } else {
+                // vertical sidebar collapsed
+                sidebar.classList.toggle('collapsed');
+
+                // Save to localstorage
+                const nowCollapsed = sidebar.classList.contains('collapsed');
+                localStorage.setItem('sidebar-collapsed', nowCollapsed);
+            }
+        });
+    }
 });
