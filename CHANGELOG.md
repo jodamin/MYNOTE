@@ -3,6 +3,25 @@ All changes to the **MYNOTE** project are documented here.
 
 ---
 
+## [1.5.0] - 2026-03-01
+### 🚀 Added
+- **Mobile-First Top Navigation**: Re-engineered the Sidebar into a sticky horizontal Header for mobile devices, optimizing screen real estate.
+- **Adaptive Note Grid**: Implemented a responsive `auto-fill` grid system. Notes now automatically arrange into 1, 2, or 3 columns based on screen width.
+- **Smooth Slide Animation**: Added a fluid "Slide Down" transition for the mobile menu with hardware acceleration (`will-change: max-height`).
+
+### 🔄 Changed
+- **Glassmorphism Consistency**: Unified the blur effect across both Desktop and Mobile interfaces for a premium, seamless look.
+- **Enhanced Modal UX**: Redesigned the "Add/Update Note" popup on mobile to be wider and more centered, ensuring buttons are easy to tap.
+- **Sidebar Logic Refinement**: The mobile menu now only auto-closes when a note is added, allowing users to toggle themes without losing their place.
+
+### 🛠️ Fixed
+- **Z-Index Layering Bug**: Resolved an issue where the Header was overlapping the Note Modal by elevating the modal to `z-index: 9999`.
+- **Theme Toggle ReferenceError**: Fixed a JavaScript crash caused by an undefined `sidebar` variable inside the theme switching function.
+- **Mobile Scroll Lock**: Fixed a CSS conflict that prevented users from scrolling through their notes on mobile browsers.
+- **Button Overflow**: Corrected a layout bug where "Save" and "Delete" buttons were drifting outside the modal boundaries on small screens.
+
+---
+
 ## [1.4.0] - 2026-02-26
 ### 🚀 Added
 - **PostgreSQL Integration**: Migrated the database from local SQLite to a professional PostgreSQL instance on Render for permanent data storage.
